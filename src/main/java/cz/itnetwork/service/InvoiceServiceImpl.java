@@ -29,16 +29,12 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Autowired
     private PersonRepository personRepository;
 
+
     @Override
     public InvoiceDTO addInvoice(InvoiceDTO invoiceDTO) {
         InvoiceEntity invoice = invoiceMapper.toEntity(invoiceDTO);
         invoice = invoiceRepository.save(invoice);
-
-        PersonEntity buyer = personRepository.getReferenceById(invoiceDTO.getBuyer().getId());
-        invoice.setBuyer(buyer);//vezme si data o buyerovi, kterého zjistí podle id a přiřadí hodnoty
-
-        PersonEntity seller = personRepository.getReferenceById(invoiceDTO.getSeller().getId());
-        invoice.setSeller(seller);//vezme si data o sellerovi, kterého zjistí podle id a přiřadí hodnoty
+        setBuyerAndSeller(invoice, invoiceDTO);
 
         return invoiceMapper.toDTO(invoice); // vypíše invoice kompletně i s hodnotami o sellerovi a buyerovi
     }
@@ -63,6 +59,8 @@ public class InvoiceServiceImpl implements InvoiceService {
         }
         InvoiceEntity invoice = invoiceMapper.toEntity(invoiceDTO);
         InvoiceEntity saved = invoiceRepository.save(invoice);
+        setBuyerAndSeller(invoice, invoiceDTO);
+
         return invoiceMapper.toDTO(saved);
     }
 
@@ -79,5 +77,13 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Invoice with id " + id + " wasn't found in the database."));
     }
+    //pomocná metoda, abychom zachovali DRY u metod addInvoice a editInvoice
+    private void setBuyerAndSeller(InvoiceEntity invoice, InvoiceDTO invoiceDTO) {
+        PersonEntity buyer = personRepository.getReferenceById(invoiceDTO.getBuyer().getId());
+        PersonEntity seller = personRepository.getReferenceById(invoiceDTO.getSeller().getId());
+        invoice.setBuyer(buyer);//vezme si data o buyerovi, kterého zjistí podle id a přiřadí hodnoty
+        invoice.setSeller(seller);//vezme si data o sellerovi, kterého zjistí podle id a přiřadí hodnoty
+    }
+
 }
 
