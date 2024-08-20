@@ -35,10 +35,10 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoice = invoiceRepository.save(invoice);
 
         PersonEntity buyer = personRepository.getReferenceById(invoiceDTO.getBuyer().getId());
-        invoice.setBuyer(buyer);//vezme si data o buyer pomocí id a přiřadí hodnoty
+        invoice.setBuyer(buyer);//vezme si data o buyerovi, kterého zjistí podle id a přiřadí hodnoty
 
         PersonEntity seller = personRepository.getReferenceById(invoiceDTO.getSeller().getId());
-        invoice.setSeller(seller);//vezme si data o seller pomocí id a přiřadí hodnoty
+        invoice.setSeller(seller);//vezme si data o sellerovi, kterého zjistí podle id a přiřadí hodnoty
 
         return invoiceMapper.toDTO(invoice); // vypíše invoice kompletně i s hodnotami o sellerovi a buyerovi
     }
