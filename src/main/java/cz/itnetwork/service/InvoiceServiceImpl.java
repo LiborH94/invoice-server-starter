@@ -3,6 +3,7 @@ package cz.itnetwork.service;
 import cz.itnetwork.dto.InvoiceDTO;
 import cz.itnetwork.dto.PersonDTO;
 import cz.itnetwork.dto.mapper.InvoiceMapper;
+import cz.itnetwork.dto.mapper.PersonMapper;
 import cz.itnetwork.entity.InvoiceEntity;
 import cz.itnetwork.entity.PersonEntity;
 import cz.itnetwork.entity.repository.InvoiceRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,15 +26,22 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Autowired
     private InvoiceRepository invoiceRepository;
 
+    @Autowired
+    private PersonRepository personRepository;
 
     @Override
     public InvoiceDTO addInvoice(InvoiceDTO invoiceDTO) {
-        InvoiceEntity entity = invoiceMapper.toEntity(invoiceDTO);
-        entity = invoiceRepository.save(entity);
+        InvoiceEntity invoice = invoiceMapper.toEntity(invoiceDTO);
+        invoice = invoiceRepository.save(invoice);
 
-        return invoiceMapper.toDTO(entity);
+        PersonEntity buyer = personRepository.getReferenceById(invoiceDTO.getBuyer().getId());
+        invoice.setBuyer(buyer);//vezme si data o buyer pomocí id a přiřadí hodnoty
+
+        PersonEntity seller = personRepository.getReferenceById(invoiceDTO.getSeller().getId());
+        invoice.setSeller(seller);//vezme si data o seller pomocí id a přiřadí hodnoty
+
+        return invoiceMapper.toDTO(invoice); // vypíše invoice kompletně i s hodnotami o sellerovi a buyerovi
     }
-
     @Override
     public List<InvoiceDTO> getAll() {
         return invoiceRepository.findAll()
