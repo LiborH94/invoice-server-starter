@@ -16,9 +16,6 @@ public interface InvoiceService {
 
     InvoiceDTO getInvoice (Long id);
 
-    List<InvoiceDTO> findSalesByIC(String ic);
-
-    List<InvoiceDTO> findPurchasesByIC(String ic);
 
 }
 

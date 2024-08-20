@@ -21,6 +21,7 @@
  */
 package cz.itnetwork.controller;
 
+import cz.itnetwork.dto.InvoiceDTO;
 import cz.itnetwork.dto.PersonDTO;
 import cz.itnetwork.entity.repository.PersonRepository;
 import cz.itnetwork.service.PersonService;
@@ -59,6 +60,15 @@ public class PersonController {
     @GetMapping("/persons/{personId}")
     public PersonDTO getPerson(@PathVariable Long personId) {
         return personService.getPerson(personId);
+    }
+    @GetMapping("/identification/{ic}/sales")
+    public List<InvoiceDTO> getSalesByIC(@PathVariable String ic) {
+        return personService.findSalesByIC(ic);
+    }
+
+    @GetMapping("/identification/{ic}/purchases")
+    public List<InvoiceDTO> getPurchasesByIC(@PathVariable String ic) {
+        return personService.findPurchasesByIC(ic);
     }
 
     @PutMapping({"/persons/{personId}"})

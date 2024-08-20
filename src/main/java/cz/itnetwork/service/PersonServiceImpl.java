@@ -23,9 +23,11 @@ package cz.itnetwork.service;
 
 import cz.itnetwork.dto.InvoiceDTO;
 import cz.itnetwork.dto.PersonDTO;
+import cz.itnetwork.dto.mapper.InvoiceMapper;
 import cz.itnetwork.dto.mapper.PersonMapper;
 import cz.itnetwork.entity.InvoiceEntity;
 import cz.itnetwork.entity.PersonEntity;
+import cz.itnetwork.entity.repository.InvoiceRepository;
 import cz.itnetwork.entity.repository.PersonRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,12 @@ public class PersonServiceImpl implements PersonService {
     @Autowired
     private PersonRepository personRepository;
 
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+
+    @Autowired
+    private InvoiceMapper invoiceMapper;
+
     public PersonDTO addPerson(PersonDTO personDTO) {
         PersonEntity entity = personMapper.toEntity(personDTO);
         entity = personRepository.save(entity);
@@ -53,7 +61,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public PersonDTO getPerson(Long personId) {
-        PersonEntity person = personRepository.getReferenceById(personId);
+        PersonEntity person = fetchPersonById(personId);
         return personMapper.toDTO(person);
     }
 
@@ -68,6 +76,22 @@ public class PersonServiceImpl implements PersonService {
         } catch (NotFoundException ignored) {
             // The contract in the interface states, that no exception is thrown, if the entity is not found.
         }
+    }
+
+    @Override
+    public List<InvoiceDTO> findSalesByIC(String ic) {
+        List<InvoiceEntity> invoices = invoiceRepository.findBySellerIdentificationNumber(ic);
+        return invoices.stream()
+                .map(invoiceMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<InvoiceDTO> findPurchasesByIC(String ic) {
+        List<InvoiceEntity> invoices = invoiceRepository.findByBuyerIdentificationNumber(ic);
+        return invoices.stream()
+                .map(invoiceMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

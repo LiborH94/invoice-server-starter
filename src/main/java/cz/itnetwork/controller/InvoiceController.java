@@ -32,15 +32,6 @@ public class InvoiceController {
     public InvoiceDTO editInvoice (@PathVariable Long id, @RequestBody InvoiceDTO invoiceDTO) {
         return invoiceService.editInvoice(id, invoiceDTO);
     }
-    @GetMapping("/identification/{ic}/sales")
-    public List<InvoiceDTO> getSalesByIC(@PathVariable String ic) {
-        return invoiceService.findSalesByIC(ic);
-    }
-
-    @GetMapping("/identification/{ic}/purchases")
-    public List<InvoiceDTO> getPurchasesByIC(@PathVariable String ic) {
-        return invoiceService.findPurchasesByIC(ic);
-    }
 
     @DeleteMapping("/invoices/{id}")
     public ResponseEntity<Void> deleteInvoice(@PathVariable Long id) {

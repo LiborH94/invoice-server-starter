@@ -24,8 +24,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Autowired
     private InvoiceRepository invoiceRepository;
 
-    @Autowired
-    private PersonRepository personRepository;
 
     @Override
     public InvoiceDTO addInvoice(InvoiceDTO invoiceDTO) {
@@ -57,21 +55,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         InvoiceEntity invoice = invoiceMapper.toEntity(invoiceDTO);
         InvoiceEntity saved = invoiceRepository.save(invoice);
         return invoiceMapper.toDTO(saved);
-    }
-    @Override
-    public List<InvoiceDTO> findSalesByIC(String ic) {
-        List<InvoiceEntity> invoices = invoiceRepository.findBySellerIdentificationNumber(ic);
-        return invoices.stream()
-                .map(invoiceMapper::toDTO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<InvoiceDTO> findPurchasesByIC(String ic) {
-        List<InvoiceEntity> invoices = invoiceRepository.findByBuyerIdentificationNumber(ic);
-        return invoices.stream()
-                .map(invoiceMapper::toDTO)
-                .collect(Collectors.toList());
     }
 
     @Override
