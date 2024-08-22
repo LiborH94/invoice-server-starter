@@ -4,6 +4,7 @@ import cz.itnetwork.dto.InvoiceDTO;
 import cz.itnetwork.dto.PersonDTO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PersonService {
 
@@ -22,6 +23,6 @@ public interface PersonService {
 
     List<InvoiceDTO> findPurchasesByIC(String ic);
 
-
+    Map<String, Integer> getStatistics();
 
 }
