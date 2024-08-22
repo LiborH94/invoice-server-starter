@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -38,4 +39,10 @@ public class InvoiceController {
         invoiceService.removeInvoice(id);
         return ResponseEntity.noContent().build(); // Vrátí status 204 (No Content)
     }
+
+    @GetMapping("/invoices/statistics")
+    public Map<String, Integer> getStatistics() {
+        return invoiceService.getStatistics();
+    }
+
 }

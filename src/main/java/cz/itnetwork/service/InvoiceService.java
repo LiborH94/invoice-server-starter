@@ -3,6 +3,7 @@ package cz.itnetwork.service;
 import cz.itnetwork.dto.InvoiceDTO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface InvoiceService {
 
@@ -16,6 +17,7 @@ public interface InvoiceService {
 
     InvoiceDTO getInvoice (Long id);
 
+    Map<String, Integer> getStatistics();
 
 }
 

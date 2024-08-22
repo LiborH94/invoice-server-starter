@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -66,11 +66,25 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public void removeInvoice(Long id) {
-        try {
             InvoiceEntity invoice = fetchInvoiceById(id);
             invoiceRepository.delete(invoice);
-        } catch (NotFoundException ignored) {
-        }
+
+    }
+
+    public Map<String, Integer> getStatistics() {
+
+        Integer currentYearSum = invoiceRepository.findCurrentYearSum();
+        Integer allTimeSum = invoiceRepository.findAllTimeSum();
+        Integer invoicesCount = invoiceRepository.countAllInvoices();
+
+        Map<String, Integer> statistics = new LinkedHashMap<>();
+
+        statistics.put("currentYearSum", currentYearSum);
+        statistics.put("allTimeSum", allTimeSum);
+        statistics.put("invoicesCount", invoicesCount);
+
+
+        return statistics;
     }
 
     private InvoiceEntity fetchInvoiceById(long id) {

@@ -22,4 +22,6 @@ public interface PersonService {
 
     List<InvoiceDTO> findPurchasesByIC(String ic);
 
+
+
 }
