@@ -83,7 +83,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         statistics.put("allTimeSum", allTimeSum);
         statistics.put("invoicesCount", invoicesCount);
 
-
         return statistics;
     }
 
