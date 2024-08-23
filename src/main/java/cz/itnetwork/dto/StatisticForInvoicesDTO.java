@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StatisticsForInvoicesDTO {
+public class StatisticForInvoicesDTO {
 
     private Integer currentYearSum;
     private Integer allTimeSum;

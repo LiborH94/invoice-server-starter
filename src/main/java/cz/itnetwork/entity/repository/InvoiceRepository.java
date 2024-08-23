@@ -18,8 +18,6 @@ public interface InvoiceRepository extends JpaRepository<InvoiceEntity, Long> {
     @Query("SELECT COUNT(i) FROM invoice i")
     Integer countAllInvoices();
 
-
-
     List<InvoiceEntity> findByBuyerIdentificationNumber(String ic);
 
     List<InvoiceEntity> findBySellerIdentificationNumber(String ic);

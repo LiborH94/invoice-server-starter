@@ -23,8 +23,10 @@ package cz.itnetwork.controller;
 
 import cz.itnetwork.dto.InvoiceDTO;
 import cz.itnetwork.dto.PersonDTO;
+import cz.itnetwork.dto.StatisticForPersonsDTO;
 import cz.itnetwork.entity.repository.PersonRepository;
 import cz.itnetwork.service.PersonService;
+import cz.itnetwork.service.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +42,9 @@ public class PersonController {
 
     @Autowired
     private PersonRepository personRepository;
+
+    @Autowired
+    private StatisticService statisticService;
 
     @PostMapping("/persons")
     public PersonDTO addPerson(@RequestBody PersonDTO personDTO) {
@@ -61,6 +66,7 @@ public class PersonController {
     public PersonDTO getPerson(@PathVariable Long personId) {
         return personService.getPerson(personId);
     }
+
     @GetMapping("/identification/{ic}/sales")
     public List<InvoiceDTO> getSalesByIC(@PathVariable String ic) {
         return personService.findSalesByIC(ic);
@@ -75,5 +81,11 @@ public class PersonController {
     public PersonDTO editPerson(@PathVariable Long personId, @RequestBody PersonDTO personDTO) {
         return personService.editPerson(personId, personDTO);
     }
+
+    @GetMapping("persons/statistics")
+    public List <StatisticForPersonsDTO> statisticForPersons() {
+        return statisticService.statisticForPersons();
+    }
+
 }
 
