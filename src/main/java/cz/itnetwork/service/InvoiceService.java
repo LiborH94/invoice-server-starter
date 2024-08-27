@@ -17,7 +17,5 @@ public interface InvoiceService {
 
     InvoiceDTO getInvoice (Long id);
 
-    Map<String, Integer> getStatistics();
-
 }
 
