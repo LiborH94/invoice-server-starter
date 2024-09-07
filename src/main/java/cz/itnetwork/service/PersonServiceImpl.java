@@ -35,7 +35,6 @@ import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -110,11 +109,6 @@ public class PersonServiceImpl implements PersonService {
                 .stream()
                 .map(i -> personMapper.toDTO(i))
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public Map<String, Integer> getStatistics() {
-        return Map.of();
     }
 
     private PersonEntity fetchPersonById(long id) {

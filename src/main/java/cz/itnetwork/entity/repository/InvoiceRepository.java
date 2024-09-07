@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface InvoiceRepository extends JpaRepository<InvoiceEntity, Long>, JpaSpecificationExecutor<InvoiceEntity> {
 
-
-
     @Query("SELECT SUM(i.price) FROM invoice i WHERE YEAR(i.issued) = YEAR(CURRENT_DATE)")
     Integer findCurrentYearSum();
 

@@ -43,9 +43,6 @@ public class PersonController {
     @Autowired
     private PersonRepository personRepository;
 
-    @Autowired
-    private StatisticService statisticService;
-
     @PostMapping("/persons")
     public PersonDTO addPerson(@RequestBody PersonDTO personDTO) {
         return personService.addPerson(personDTO);
@@ -81,11 +78,5 @@ public class PersonController {
     public PersonDTO editPerson(@PathVariable Long personId, @RequestBody PersonDTO personDTO) {
         return personService.editPerson(personId, personDTO);
     }
-
-    @GetMapping("persons/statistics")
-    public List <StatisticForPersonsDTO> statisticForPersons() {
-        return statisticService.statisticForPersons();
-    }
-
 }
 

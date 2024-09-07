@@ -23,6 +23,4 @@ public interface PersonService {
 
     List<InvoiceDTO> findPurchasesByIC(String ic);
 
-    Map<String, Integer> getStatistics();
-
 }
