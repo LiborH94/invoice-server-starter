@@ -17,10 +17,12 @@ public class InvoiceSpecification implements Specification<InvoiceEntity> {
 
     private final InvoiceFilter filter;
 
+    // Zde se vytvoří metoda na filtry
     @Override
     public Predicate toPredicate(Root<InvoiceEntity> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
 
+        // zde si vytvoříme predicates, podle čeho se bude filtrovat
         if (filter.getBuyerID() != null) {
             predicates.add(criteriaBuilder.equal(root.get("buyer").get("id"), filter.getBuyerID()));
         }

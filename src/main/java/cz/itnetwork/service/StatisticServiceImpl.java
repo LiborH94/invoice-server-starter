@@ -25,6 +25,7 @@ public class StatisticServiceImpl implements StatisticService{
         Integer currentYearSum = invoiceRepository.findCurrentYearSum();
         Integer allTimeSum = invoiceRepository.findAllTimeSum();
 
+        //vytvoří se nové DTO pro statistiky
         return new StatisticForInvoicesDTO(currentYearSum, allTimeSum, totalInvoices);
     }
 

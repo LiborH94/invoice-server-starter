@@ -23,10 +23,8 @@ package cz.itnetwork.controller;
 
 import cz.itnetwork.dto.InvoiceDTO;
 import cz.itnetwork.dto.PersonDTO;
-import cz.itnetwork.dto.StatisticForPersonsDTO;
 import cz.itnetwork.entity.repository.PersonRepository;
 import cz.itnetwork.service.PersonService;
-import cz.itnetwork.service.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

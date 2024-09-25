@@ -1,9 +1,7 @@
 package cz.itnetwork.service;
 
 import cz.itnetwork.dto.InvoiceDTO;
-import cz.itnetwork.dto.PersonDTO;
 import cz.itnetwork.dto.mapper.InvoiceMapper;
-import cz.itnetwork.dto.mapper.PersonMapper;
 import cz.itnetwork.entity.InvoiceEntity;
 import cz.itnetwork.entity.PersonEntity;
 import cz.itnetwork.entity.filter.InvoiceFilter;
@@ -16,7 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,7 +29,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Autowired
     private PersonRepository personRepository;
 
-
+    // vytvoří novou fakturu
     @Override
     public InvoiceDTO addInvoice(InvoiceDTO invoiceDTO) {
         InvoiceEntity invoice = invoiceMapper.toEntity(invoiceDTO);
@@ -41,6 +38,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         return invoiceMapper.toDTO(invoice); // vypíše invoice kompletně i s hodnotami o sellerovi a buyerovi
     }
+
+    // získá všechny faktury
     @Override
     public List<InvoiceDTO> getAll(InvoiceFilter invoiceFilter) {
         InvoiceSpecification invoiceSpecification = new InvoiceSpecification(invoiceFilter);
@@ -50,12 +49,14 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .collect(Collectors.toList());
     }
 
+    // získá fakturu podle id
     @Override
     public InvoiceDTO getInvoice(Long id) {
         InvoiceEntity invoice = invoiceRepository.getReferenceById(id);
         return invoiceMapper.toDTO(invoice);
     }
 
+    // upraví fakturu podle id, napřed zkontroluje, zda faktura existuje
     @Override
     public InvoiceDTO editInvoice(Long Id, InvoiceDTO invoiceDTO) {
         if (!invoiceRepository.existsById(Id)) {
@@ -68,6 +69,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceMapper.toDTO(saved);
     }
 
+    //odstraní fakturu podle id
     @Override
     public void removeInvoice(Long id) {
             InvoiceEntity invoice = fetchInvoiceById(id);
@@ -75,6 +77,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     }
 
+    /**
+     *
+     * @param id id faktury
+     * @return vrací fakturu
+     */
     private InvoiceEntity fetchInvoiceById(long id) {
         return invoiceRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Invoice with id " + id + " wasn't found in the database."));

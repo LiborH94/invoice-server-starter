@@ -1,14 +1,10 @@
 package cz.itnetwork.entity;
 
-import cz.itnetwork.dto.PersonDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity(name = "invoice")
 @Getter
