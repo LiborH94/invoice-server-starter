@@ -48,14 +48,9 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public void removePerson(Long personId) {
-        try {
             PersonEntity person = fetchPersonById(personId);
             person.setHidden(true);
-
             personRepository.save(person);
-        } catch (NotFoundException ignored) {
-            // The contract in the interface states, that no exception is thrown, if the entity is not found.
-        }
     }
 
     @Override
