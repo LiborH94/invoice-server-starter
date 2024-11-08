@@ -47,6 +47,6 @@ public class InvoiceController {
     @DeleteMapping("/invoices/{id}")
     public ResponseEntity<Void> deleteInvoice(@PathVariable Long id) {
         invoiceService.removeInvoice(id);
-        return ResponseEntity.noContent().build(); // Vrátí status 204 (No Content)
+        return ResponseEntity.noContent().build(); // Vrátí kód 204 (No Content)
     }
 }
